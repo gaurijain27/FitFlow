@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>FITFLOW — Find Your Flow. Build Your Best.</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono&family=Inter:wght@400;500;600;700;800&family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,500&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --ink:#101113;--deep:#17181c;--soft:#f3f3f5;--paper:#fbfbfc;
+      --pink:#ffbebe;--mint:#65c596;--lav:#b1acec;--line:#e5e5e9;
+      --muted:#686870;--radius:22px;
+    }
+    *{box-sizing:border-box} html{scroll-behavior:smooth} body{margin:0;background:var(--paper);color:var(--ink);font-family:Inter,Arial,sans-serif;overflow-x:hidden}
+    button,input,select{font:inherit} button{cursor:pointer;border:0} a{text-decoration:none;color:inherit}
+    .serif{font-family:"Playfair Display",Georgia,serif}.eyebrow{font-size:11px;font-weight:800;letter-spacing:.13em;text-transform:uppercase}
+    .wrap{width:min(1180px,calc(100% - 48px));margin:auto}
+    .pill{display:inline-flex;align-items:center;gap:7px;padding:9px 13px;border-radius:999px;font-size:12px;font-weight:700;background:white;border:1px solid var(--line)}
+    .dot{width:8px;height:8px;border-radius:50%;background:var(--mint);display:inline-block}
+    .btn{padding:14px 21px;border-radius:12px;font-weight:800;font-size:13px;transition:.25s transform,.25s box-shadow}
+    .btn:hover{transform:translateY(-2px);box-shadow:0 12px 25px #10111326}.btn.dark{background:var(--ink);color:white}.btn.pink{background:var(--pink)}.btn.mint{background:var(--mint)}
+    header{height:75px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid #ececef;position:relative;z-index:8;background:#fbfbfceb}
+    .logo{font-family:"Playfair Display",serif;font-size:30px;font-weight:600;letter-spacing:-2px;position:relative}.logo:after{content:"";position:absolute;width:9px;height:9px;background:var(--mint);border-radius:10px 10px 2px;left:3px;top:5px}
+    nav{display:flex;gap:28px;font-size:12px;font-weight:700} nav a{color:#4f5055;transition:.2s}nav a:hover{color:var(--ink)}
+    .menu{display:none;background:transparent;font-size:24px}
+    .hero{position:relative;min-height:665px;padding:82px 0 60px;overflow:hidden;background:radial-gradient(circle at 85% 25%,#d4f2e4 0,transparent 20%),radial-gradient(circle at 16% 35%,#ffe3e4 0,transparent 26%),#fbfbfc}
+    .hero-grid{display:grid;grid-template-columns:1.04fr .96fr;align-items:center;gap:40px;position:relative;z-index:2}
+    h1{font:600 clamp(49px,6vw,84px)/.95 "Playfair Display",serif;letter-spacing:-.07em;margin:19px 0 22px;max-width:690px}
+    h1 em{font-style:italic;font-weight:500}.lead{font-size:16px;line-height:1.7;color:#56565e;max-width:495px;margin:0 0 29px}
+    .hero-buttons{display:flex;gap:11px;align-items:center}.mini-note{font-size:11px;color:var(--muted);margin-top:18px}
+    .stage{height:470px;position:relative}
+    .halo{width:397px;height:397px;background:linear-gradient(145deg,#ffbebe,#dfc9e9 47%,#75ca9f);border-radius:48% 52% 43% 57%/53% 44% 56% 47%;position:absolute;top:20px;right:32px;filter:blur(.1px);animation:morph 8s ease-in-out infinite}
+    .portrait{position:absolute;height:420px;width:295px;right:77px;bottom:0;border-radius:142px 142px 26px 26px;overflow:hidden;background:#303236;box-shadow:0 22px 40px #1e242533}
+    .portrait img{height:100%;width:100%;object-fit:cover;object-position:54% center;filter:saturate(.72) contrast(1.06)}
+    .portrait:after{content:"";position:absolute;inset:0;background:linear-gradient(0deg,#10111399,transparent 40%)}
+    .metric{position:absolute;z-index:3;background:#ffffffde;border:1px solid white;backdrop-filter:blur(8px);border-radius:15px;padding:13px 15px;box-shadow:0 14px 30px #17181c1c;font-size:11px}
+    .metric strong{font-size:20px;display:block;letter-spacing:-1px;margin-top:2px}.metric.one{top:78px;left:6px}.metric.two{right:0;bottom:80px}.metric small{color:#686870;font-size:10px}.up{color:#249c67;font-weight:800}
+    .orbit{position:absolute;border:1px solid #10111320;width:490px;height:190px;border-radius:50%;right:-4px;top:144px;transform:rotate(-23deg)}
+    .scrollhint{position:absolute;bottom:20px;left:50%;font-size:10px;letter-spacing:.15em;text-transform:uppercase;transform:translateX(-50%);color:#777}
+    @keyframes morph{50%{border-radius:57% 43% 54% 46%/42% 58% 42% 58%;transform:rotate(7deg)}}
+    .trust{padding:22px 0;background:white;border-block:1px solid var(--line)}.trust-inner{display:flex;justify-content:space-between;align-items:center;gap:20px}.trust p{font-size:12px;margin:0;color:#606068}.trust-items{display:flex;gap:36px}.trust-items b{font-size:12px}.trust-items span{color:#777;font-size:11px}
+    section{padding:100px 0}.section-top{display:flex;justify-content:space-between;align-items:end;margin-bottom:40px}.section-top h2{font:600 clamp(37px,4vw,54px)/1 "Playfair Display",serif;letter-spacing:-.06em;margin:10px 0 0}.section-top p{max-width:330px;color:#686870;font-size:13px;line-height:1.65;margin:0}
+    .steps{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}.step{background:white;border:1px solid var(--line);border-radius:18px;padding:25px;min-height:200px;position:relative;transition:.25s}.step:hover{transform:translateY(-6px);border-color:#c8e8d8}.number{font:600 42px/1 "Playfair Display";color:#d1cfee}.step:nth-child(2) .number{color:#f3b6b9}.step:nth-child(3) .number{color:#60bb91}.step h3{font-size:15px;margin:31px 0 9px}.step p{font-size:12px;line-height:1.55;color:#777;margin:0}.arrow{position:absolute;right:-19px;top:49%;z-index:2;font-size:22px}
+    .goals{background:var(--deep);color:#fff;overflow:hidden;position:relative}.goals:before{content:"";position:absolute;width:700px;height:700px;border-radius:50%;background:#b1acec18;top:-420px;right:-190px}
+    .goals .section-top p{color:#bcbcc2}.goal-grid{display:grid;grid-template-columns:1.05fr .95fr;gap:30px;align-items:stretch}.goal-list{display:grid;grid-template-columns:repeat(3,1fr);gap:11px;align-content:start}
+    .goal{height:125px;padding:17px;border-radius:16px;text-align:left;background:#28292e;color:white;border:1px solid #3c3d42;transition:.2s;position:relative;overflow:hidden}.goal:hover,.goal.active{background:var(--mint);color:#111;border-color:var(--mint);transform:translateY(-3px)}.goal b{display:block;font-size:14px}.goal span{font-size:11px;opacity:.7;display:block;margin-top:5px}.goal i{position:absolute;right:15px;bottom:10px;font:34px "Playfair Display";opacity:.35}
+    .goal-feature{min-height:319px;border-radius:20px;position:relative;overflow:hidden;background:linear-gradient(135deg,#32333a,#17181b)}.goal-feature img{position:absolute;width:100%;height:100%;object-fit:cover;opacity:.75;filter:grayscale(.35) saturate(.75)}.goal-feature:after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,#111216d9,transparent 80%)}.goal-copy{position:absolute;z-index:2;left:28px;bottom:25px;max-width:265px}.goal-copy h3{font:500 31px/1 "Playfair Display";margin:0 0 9px}.goal-copy p{font-size:12px;line-height:1.5;color:#ddd}
+    .roadmap{background:linear-gradient(120deg,#f8e7e9,#f9fafb 46%,#e6f5ed)}.road-card{background:#fff;border-radius:22px;padding:34px;box-shadow:0 15px 45px #1d1e2210}.roadline{display:grid;grid-template-columns:repeat(6,1fr);position:relative;gap:7px}.roadline:before{content:"";height:4px;border-radius:5px;background:linear-gradient(90deg,var(--pink),var(--mint),var(--lav));position:absolute;top:22px;left:5%;right:5%}.milestone{position:relative;z-index:1;text-align:center}.mile-dot{width:47px;height:47px;display:grid;place-items:center;margin:0 auto 13px;border-radius:50%;background:white;border:3px solid var(--pink);font-size:12px;font-weight:800}.milestone:nth-child(3) .mile-dot,.milestone:nth-child(4) .mile-dot{border-color:var(--mint)}.milestone:nth-child(5) .mile-dot,.milestone:nth-child(6) .mile-dot{border-color:var(--lav)}.milestone b{font-size:12px}.milestone span{display:block;font-size:10px;color:#777;margin-top:5px}
+    .dashboard{display:grid;grid-template-columns:1.15fr .85fr;gap:25px}.workout-panel{border-radius:22px;background:linear-gradient(125deg,#17191f,#24262d);color:white;padding:27px;min-height:383px;position:relative;overflow:hidden}.workout-panel:after{content:"";position:absolute;width:380px;height:380px;border-radius:50%;right:-110px;bottom:-150px;background:#65c59625}.worktop{display:flex;justify-content:space-between;position:relative;z-index:1}.workout-panel h3{font:500 32px "Playfair Display";margin:7px 0}.exercise{position:relative;z-index:1;display:flex;align-items:center;gap:19px;background:#ffffff0b;border:1px solid #ffffff12;padding:15px;border-radius:15px;margin-top:24px}.ex-icon{width:83px;height:83px;border-radius:12px;background:linear-gradient(145deg,#ffbebe,#b1acec);display:grid;place-items:center;font-size:37px}.exercise h4{margin:0 0 5px;font-size:15px}.exercise p{font-size:11px;color:#c9c9cd;margin:0 0 10px}.tags{display:flex;gap:6px}.tag{font:10px DM Mono;background:#ffffff12;border-radius:5px;padding:5px 7px}.form-tip{position:relative;z-index:1;border-top:1px solid #ffffff20;margin-top:20px;padding-top:17px;font-size:11px;color:#d2d2d6}.form-tip strong{color:var(--mint)}
+    .progress-panel{padding:26px;background:white;border:1px solid var(--line);border-radius:22px}.progress-panel h3{font:500 28px "Playfair Display";margin:5px 0 23px}.stat{margin-bottom:20px}.stat-head{display:flex;justify-content:space-between;font-size:12px;font-weight:700;margin-bottom:8px}.bar{height:9px;background:#eeeef1;border-radius:10px;overflow:hidden}.bar i{display:block;height:100%;border-radius:10px;background:linear-gradient(90deg,var(--pink),var(--mint));width:0;transition:1.2s ease}.small-stats{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:25px}.small-stat{border-radius:13px;padding:13px;background:#f6f6f8}.small-stat b{font-size:20px;display:block}.small-stat span{font-size:10px;color:#666}
+    .nutrition{background:#f1f2f3}.nutrition-grid{display:grid;grid-template-columns:.9fr 1.1fr;gap:32px}.budget-box{border-radius:22px;padding:31px;background:var(--pink)}.budget-box h3{font:500 31px/1.05 "Playfair Display";margin:10px 0}.budget-box p{font-size:12px;line-height:1.55;max-width:370px}.budget-controls{margin-top:25px;display:flex;gap:10px}.budget-controls input{width:135px;border:0;border-radius:11px;padding:13px;font-weight:700;outline:2px solid transparent}.budget-controls input:focus{outline-color:#111}.meal-plan{background:#fff;padding:24px;border-radius:22px;border:1px solid var(--line)}.meal-plan header{height:auto;border:0;background:transparent;margin-bottom:16px}.meal-plan h3{font-size:16px;margin:0}.meal{display:flex;align-items:center;gap:12px;padding:12px 0;border-top:1px solid #ededf0}.food{width:39px;height:39px;border-radius:10px;display:grid;place-items:center;background:#e5f5eb;font-size:18px}.meal:nth-child(3) .food{background:#f9e1e3}.meal:nth-child(4) .food{background:#e8e5fa}.meal b{font-size:12px;display:block}.meal span{font-size:10px;color:#777}.cost{margin-left:auto;text-align:right}.cost b{color:#25815c}
+    .coach-wrap{padding:100px 0;background:white}.coach{min-height:420px;border-radius:25px;overflow:hidden;display:grid;grid-template-columns:.85fr 1.15fr;background:var(--deep);color:white}.coach-info{padding:42px;background:radial-gradient(circle at 25% 10%,#b1acec53,transparent 35%)}.coach-info h2{font:500 clamp(37px,4vw,53px)/.98 "Playfair Display";letter-spacing:-.05em;margin:14px 0}.coach-info p{font-size:13px;color:#cacad0;line-height:1.65;max-width:330px}.coach-points{list-style:none;padding:10px 0 0;margin:0}.coach-points li{font-size:12px;padding:9px 0;color:#efeff2}.coach-points li:before{content:"✓";display:inline-grid;place-items:center;width:18px;height:18px;border-radius:50%;background:var(--mint);color:#111;margin-right:9px;font-weight:bold}
+    .chat{padding:26px;background:#25262b;display:flex;flex-direction:column;gap:13px}.chat-head{display:flex;gap:11px;align-items:center;margin-bottom:2px}.avatar{height:35px;width:35px;border-radius:12px;background:linear-gradient(145deg,var(--mint),var(--lav));display:grid;place-items:center;color:#111;font-weight:900}.chat-head b{font-size:13px}.chat-head span{font-size:10px;color:var(--mint);display:block;margin-top:3px}.bubble{max-width:84%;padding:12px 13px;border-radius:14px;font-size:12px;line-height:1.48}.bubble.bot{background:#35363c;align-self:flex-start;border-bottom-left-radius:3px}.bubble.user{background:var(--pink);color:#171717;align-self:flex-end;border-bottom-right-radius:3px}.prompt{display:flex;margin-top:auto;gap:8px}.prompt input{flex:1;background:#16171b;border:1px solid #4a4b50;border-radius:10px;color:white;padding:12px;outline:0;font-size:12px}.prompt button{width:42px;border-radius:10px;background:var(--mint);font-size:18px}
+    footer{padding:42px 0 24px;background:#111216;color:#ddd}.footer-top{display:flex;justify-content:space-between;gap:30px;padding-bottom:35px}.footer-top .logo{color:white}.footer-top p{font-size:12px;color:#aaa;max-width:285px;line-height:1.6}.footer-links{display:flex;gap:45px}.footer-links a{font-size:12px;display:block;margin:8px 0;color:#bbb}.copyright{border-top:1px solid #303136;padding-top:18px;font-size:10px;color:#777;display:flex;justify-content:space-between}
+    .modal{display:none;position:fixed;inset:0;background:#10111399;z-index:20;place-items:center;padding:20px}.modal.open{display:grid}.modal-box{width:min(510px,100%);background:white;border-radius:22px;padding:31px;position:relative}.close{position:absolute;right:17px;top:16px;background:#eee;border-radius:50%;height:30px;width:30px}.modal-box h2{font:500 34px "Playfair Display";margin:9px 0}.modal-box p{font-size:13px;color:#666;line-height:1.5}.goal-choice{display:grid;grid-template-columns:repeat(3,1fr);gap:9px;margin:20px 0}.goal-choice button{padding:13px 7px;border-radius:10px;background:#f2f2f4;font-size:12px;font-weight:700}.goal-choice button.selected{background:var(--mint)}.modal-result{font-size:12px;background:#ecf8f1;padding:12px;border-radius:10px;display:none}
+    @media(max-width:800px){.wrap{width:min(100% - 32px,600px)}header{height:65px}nav{position:absolute;display:none;top:65px;left:0;right:0;background:white;padding:18px 24px;flex-direction:column;gap:17px;border-bottom:1px solid var(--line)}nav.open{display:flex}.menu{display:block}.header-cta{display:none}.hero{padding:55px 0 20px;min-height:auto}.hero-grid,.goal-grid,.dashboard,.nutrition-grid,.coach{grid-template-columns:1fr}.stage{height:390px;margin-top:15px}.halo{width:310px;height:310px;right:50%;transform:translateX(50%)}.portrait{height:345px;width:245px;right:50%;transform:translateX(50%)}.metric.one{left:0}.metric.two{right:0}.trust-inner{align-items:flex-start}.trust-items{display:grid;grid-template-columns:1fr 1fr;gap:8px}.trust-items span{display:block}.steps{grid-template-columns:1fr 1fr}.arrow{display:none}section{padding:70px 0}.section-top{display:block}.section-top p{margin-top:17px}.goal-feature{min-height:280px}.road-card{padding:22px 8px}.roadline{overflow-x:auto}.milestone{min-width:105px}.roadline:before{width:570px;left:31px;right:auto}.coach-info{padding:31px}.chat{min-height:350px}.footer-top{display:block}.footer-links{margin-top:25px;gap:25px}h1{letter-spacing:-.065em}.hero-buttons{flex-wrap:wrap}}
+    @media(max-width:420px){.steps,.goal-list{grid-template-columns:1fr 1fr}.goal-list .goal:last-child{grid-column:span 2}.budget-controls{flex-wrap:wrap}.portrait{right:47%}.section-top h2{font-size:38px}}
+  </style>
+</head>
+<body>
+  <header class="wrap">
+    <a class="logo" href="#">FITFLOW</a>
+    <nav id="nav">
+      <a href="#how">How it works</a><a href="#goals">Your goal</a><a href="#plan">Roadmap</a><a href="#nutrition">Nutrition</a><a href="#coach">AI Coach</a>
+    </nav>
+    <button class="btn dark header-cta" onclick="openJourney()">Start journey</button>
+    <button class="menu" aria-label="Open navigation" onclick="document.getElementById('nav').classList.toggle('open')">☰</button>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="wrap hero-grid">
+        <div>
+          <span class="pill"><i class="dot"></i> A plan made around your life</span>
+          <h1>Find your flow.<br><em>Build your best.</em></h1>
+          <p class="lead">Personalized workouts, practical nutrition and clear progress guidance — for the version of fit that feels like you.</p>
+          <div class="hero-buttons">
+            <button class="btn dark" onclick="openJourney()">START MY JOURNEY →</button>
+            <a class="btn" href="#how">See how it works</a>
+          </div>
+          <p class="mini-note">No gym knowledge needed · Built for real schedules & budgets</p>
+        </div>
+        <div class="stage" aria-label="FITFLOW athlete visual">
+          <div class="halo"></div><div class="orbit"></div>
+          <div class="metric one"><small>WEEKLY FLOW</small><strong>4 <span class="up">/ 5</span></strong><small>workouts completed</small></div>
+          <div class="portrait"><img src="https://images.unsplash.com/photo-1518310383802-640c2de311b2?auto=format&fit=crop&w=700&q=85" alt="Athlete training with dumbbell"></div>
+          <div class="metric two"><small>GOAL PROGRESS</small><strong>72%</strong><small><span class="up">↑ 8%</span> this month</small></div>
+        </div>
+      </div>
+      <div class="scrollhint">Scroll to discover ↓</div>
+    </section>
+
+    <div class="trust"><div class="wrap trust-inner"><p>Everything you need to feel confident on day one.</p><div class="trust-items"><div><b>Personalized</b><span>to your goals</span></div><div><b>Budget-aware</b><span>meal planning</span></div><div><b>Beginner-friendly</b><span>form guidance</span></div><div><b>Progress-led</b><span>weekly clarity</span></div></div></div></div>
+
+    <section id="how" class="wrap">
+      <div class="section-top"><div><span class="eyebrow">Simple by design</span><h2>Fitness with a clear<br>next step.</h2></div><p>No guessing. FITFLOW turns your starting point into a simple rhythm you can actually sustain.</p></div>
+      <div class="steps">
+        <article class="step"><div class="number">01</div><h3>Choose your goal</h3><p>Tell us what feeling strong looks like to you.</p><span class="arrow">→</span></article>
+        <article class="step"><div class="number">02</div><h3>Tell us about you</h3><p>Your time, experience, food preferences and budget matter.</p><span class="arrow">→</span></article>
+        <article class="step"><div class="number">03</div><h3>Get your plan</h3><p>Receive a balanced workout and meal roadmap.</p><span class="arrow">→</span></article>
+        <article class="step"><div class="number">04</div><h3>Track your flow</h3><p>Make small adjustments as your confidence grows.</p></article>
+      </div>
+    </section>
+
+    <section class="goals" id="goals"><div class="wrap">
+      <div class="section-top"><div><span class="eyebrow">Dream physique</span><h2>What do you want to<br><em class="serif">feel like?</em></h2></div><p>Your plan is built around your outcome, not a one-size-fits-all template.</p></div>
+      <div class="goal-grid">
+        <div class="goal-list">
+          <button class="goal active" data-goal="Lean"><b>Lean</b><span>Light & defined</span><i>↗</i></button>
+          <button class="goal" data-goal="Athletic"><b>Athletic</b><span>Strong & agile</span><i>↗</i></button>
+          <button class="goal" data-goal="Muscular"><b>Muscular</b><span>Build your shape</span><i>↗</i></button>
+          <button class="goal" data-goal="Fat Loss"><b>Fat Loss</b><span>Move with ease</span><i>↗</i></button>
+          <button class="goal" data-goal="Muscle Gain"><b>Muscle Gain</b><span>Grow steadily</span><i>↗</i></button>
+          <button class="goal" data-goal="Strength"><b>Strength</b><span>Feel capable</span><i>↗</i></button>
+        </div>
+        <article class="goal-feature">
+          <img id="goalImage" src="https://images.unsplash.com/photo-1534438327276-14e5300c3a48?auto=format&fit=crop&w=900&q=85" alt="Modern fitness studio">
+          <div class="goal-copy"><span class="eyebrow">YOUR FLOW</span><h3 id="goalTitle">Lean & confident.</h3><p id="goalText">Build sustainable routines, a little more energy and strength that carries into everyday life.</p></div>
+        </article>
+      </div>
+    </div></section>
+
+    <section class="roadmap" id="plan"><div class="wrap">
+      <div class="section-top"><div><span class="eyebrow">Your personalized roadmap</span><h2>A little progress,<br>every week.</h2></div><p>Just enough structure to stay focused — with room for your real life.</p></div>
+      <div class="road-card"><div class="roadline">
+        <div class="milestone"><div class="mile-dot">✓</div><b>START</b><span>Set your baseline</span></div>
+        <div class="milestone"><div class="mile-dot">1</div><b>WEEK 1</b><span>Find your rhythm</span></div>
+        <div class="milestone"><div class="mile-dot">4</div><b>WEEK 4</b><span>Build consistency</span></div>
+        <div class="milestone"><div class="mile-dot">8</div><b>WEEK 8</b><span>Feel the shift</span></div>
+        <div class="milestone"><div class="mile-dot">12</div><b>WEEK 12</b><span>Review & evolve</span></div>
+        <div class="milestone"><div class="mile-dot">★</div><b>GOAL</b><span>Your next flow</span></div>
+      </div></div>
+    </section>
+
+    <section class="wrap">
+      <div class="section-top"><div><span class="eyebrow">Made for your day</span><h2>Work out with<br>confidence.</h2></div><p>Every session has the detail you need, without making things complicated.</p></div>
+      <div class="dashboard">
+        <article class="workout-panel">
+          <div class="worktop"><div><span class="eyebrow" style="color:#b8b8bd">Today's flow · 32 min</span><h3>Full body strength</h3></div><span class="pill" style="height:33px;background:#ffffff16;border-color:#ffffff20;color:#fff">Beginner</span></div>
+          <div class="exercise"><div class="ex-icon">🏋️</div><div><h4>Goblet squat</h4><p>Build powerful legs with a supported, simple movement.</p><div class="tags"><span class="tag">3 sets</span><span class="tag">10 reps</span><span class="tag">60s rest</span></div></div></div>
+          <p class="form-tip"><strong>FORM TIP</strong> &nbsp; Keep your chest tall, and press through your whole foot as you stand.</p>
+        </article>
+        <article class="progress-panel">
+          <span class="eyebrow">Your progress</span><h3>Showing up is working.</h3>
+          <div class="stat"><div class="stat-head"><span>Workout consistency</span><span>82%</span></div><div class="bar"><i data-width="82%"></i></div></div>
+          <div class="stat"><div class="stat-head"><span>Strength progress</span><span>64%</span></div><div class="bar"><i data-width="64%" style="background:linear-gradient(90deg,#b1acec,#65c596)"></i></div></div>
+          <div class="stat"><div class="stat-head"><span>Goal progress</span><span>72%</span></div><div class="bar"><i data-width="72%" style="background:linear-gradient(90deg,#ffbebe,#b1acec)"></i></div></div>
+          <div class="small-stats"><div class="small-stat"><b>12 days</b><span>current streak ✦</span></div><div class="small-stat"><b>+18%</b><span>strength this month</span></div></div>
+        </article>
+      </div>
+    </section>
+
+    <section class="nutrition" id="nutrition"><div class="wrap">
+      <div class="section-top"><div><span class="eyebrow">Nutrition that fits</span><h2>Good food. Real<br>numbers. Your budget.</h2></div><p>Get practical meal suggestions that work with your preferences, location and spend.</p></div>
+      <div class="nutrition-grid">
+        <div class="budget-box"><span class="eyebrow">Budget-based planner</span><h3>What does your day<br>of food look like?</h3><p>Enter your daily food budget and we'll create a balanced, protein-forward starting plan.</p>
+          <div class="budget-controls"><input id="budget" type="number" min="100" value="200" aria-label="Daily budget in rupees"><button class="btn dark" onclick="generateMeals()">GENERATE PLAN →</button></div>
+          <p id="budgetMessage" style="font-weight:700;margin-top:17px">₹200/day can support a balanced, flexible plan.</p>
+        </div>
+        <div class="meal-plan">
+          <header><div><span class="eyebrow">Your sample day</span><h3 id="planBudget">₹200 everyday plan</h3></div><span class="pill" id="macroTotal">1,850 kcal · 112g protein</span></header>
+          <div class="meal"><div class="food">🥣</div><div><b>Breakfast · Oats & yogurt bowl</b><span>Oats, banana, yogurt, seeds</span></div><div class="cost"><b>₹45</b><span>420 kcal · 21g</span></div></div>
+          <div class="meal"><div class="food">🍛</div><div><b>Lunch · Dal rice power bowl</b><span>Dal, rice, seasonal vegetables</span></div><div class="cost"><b>₹65</b><span>560 kcal · 28g</span></div></div>
+          <div class="meal"><div class="food">🥚</div><div><b>Dinner · Egg & roti plate</b><span>Eggs, roti, fresh salad</span></div><div class="cost"><b>₹70</b><span>580 kcal · 39g</span></div></div>
+          <div class="meal"><div class="food">🥜</div><div><b>Snack · Roasted chana</b><span>Simple, portable protein</span></div><div class="cost"><b>₹20</b><span>290 kcal · 24g</span></div></div>
+        </div>
+      </div>
+    </div></section>
+
+    <section class="coach-wrap" id="coach"><div class="wrap coach">
+      <div class="coach-info"><span class="eyebrow">Meet your FITFLOW AI Coach</span><h2>Guidance that<br>gets <em>you.</em></h2><p>Ask anything. Your coach keeps your goal, schedule, food choices and budget in the conversation.</p><ul class="coach-points"><li>Adjust a missed workout</li><li>Swap meals around your budget</li><li>Get clear form guidance</li></ul></div>
+      <div class="chat">
+        <div class="chat-head"><div class="avatar">F</div><div><b>Flow Coach</b><span>● online & ready to help</span></div></div>
+        <div class="bubble bot">Hey! I see you're working towards a lean, athletic feel. What can I help you make easier today?</div>
+        <div class="bubble user">I only have 20 minutes today. What should I do?</div>
+        <div class="bubble bot" id="coachReply">Perfect — let’s keep your momentum. I’d swap today’s session for a 20-minute full-body circuit: squats, incline push-ups, rows and a short core finish. Want me to add it to your plan?</div>
+        <div class="prompt"><input id="chatInput" placeholder="Ask your coach anything..." onkeydown="if(event.key==='Enter') sendChat()"><button onclick="sendChat()" aria-label="Send message">↑</button></div>
+      </div>
+    </div></section>
+  </main>
+
+  <footer><div class="wrap"><div class="footer-top"><div><a class="logo" href="#">FITFLOW</a><p>Find Your Flow. Build Your Best.<br>Personal fitness for real life.</p></div><div class="footer-links"><div><span class="eyebrow">Explore</span><a href="#how">How it works</a><a href="#goals">Goals</a><a href="#nutrition">Nutrition</a></div><div><span class="eyebrow">Support</span><a href="#coach">AI Coach</a><a href="#" onclick="openJourney()">Start your journey</a><a href="#">Privacy</a></div></div></div><div class="copyright"><span>© 2025 FITFLOW. Built for your flow.</span><span>Fresh · Premium · Friendly</span></div></div></footer>
+
+  <div class="modal" id="journeyModal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+    <div class="modal-box"><button class="close" onclick="closeJourney()" aria-label="Close">×</button><span class="eyebrow">Your first step</span><h2 id="modalTitle">What is your focus?</h2><p>Choose a goal and we'll use it to shape your starter roadmap.</p>
+      <div class="goal-choice"><button onclick="selectModalGoal(this)">Lean</button><button onclick="selectModalGoal(this)">Athletic</button><button onclick="selectModalGoal(this)">Strength</button><button onclick="selectModalGoal(this)">Fat Loss</button><button onclick="selectModalGoal(this)">Muscle Gain</button><button onclick="selectModalGoal(this)">Just start</button></div>
+      <button class="btn dark" style="width:100%" onclick="finishJourney()">BUILD MY STARTER PLAN →</button><div class="modal-result" id="modalResult"></div>
+    </div>
+  </div>
+
+  <script>
+    const data={
+      Lean:["Lean & confident.","Build sustainable routines, a little more energy and strength that carries into everyday life."],
+      Athletic:["Athletic & capable.","Build strength, mobility and a conditioning base that helps you move with confidence."],
+      Muscular:["Strongly built.","Create steady training momentum, balanced nutrition and visible muscle definition."],
+      "Fat Loss":["Light & energized.","Focus on sustainable movement, nourishing meals and habits that add up."],
+      "Muscle Gain":["Grow with intention.","Use progressive workouts and practical protein targets to support your build."],
+      Strength:["Powerful every day.","Train foundational movements and build strength that makes life feel easier."]
+    };
+    document.querySelectorAll('.goal').forEach(b=>b.addEventListener('click',()=>{
+      document.querySelectorAll('.goal').forEach(x=>x.classList.remove('active'));b.classList.add('active');
+      const g=b.dataset.goal;document.getElementById('goalTitle').textContent=data[g][0];document.getElementById('goalText').textContent=data[g][1];
+    }));
+    function openJourney(){document.getElementById('journeyModal').classList.add('open')}
+    function closeJourney(){document.getElementById('journeyModal').classList.remove('open')}
+    let selectedGoal="your chosen goal";
+    function selectModalGoal(el){document.querySelectorAll('.goal-choice button').forEach(x=>x.classList.remove('selected'));el.classList.add('selected');selectedGoal=el.textContent}
+    function finishJourney(){let r=document.getElementById('modalResult');r.style.display='block';r.textContent="Great choice. Your "+selectedGoal+" starter roadmap is ready — scroll down to explore how FITFLOW will support you."}
+    function generateMeals(){
+      const b=Math.max(100,Number(document.getElementById('budget').value)||200);
+      const protein=Math.round(72+b*.2),cal=Math.round(1250+b*3);
+      document.getElementById('planBudget').textContent="₹"+b+" everyday plan";
+      document.getElementById('macroTotal').textContent=cal.toLocaleString()+" kcal · "+protein+"g protein";
+      document.getElementById('budgetMessage').textContent="₹"+b+"/day gives you a practical plan with "+protein+"g of protein.";
+    }
+    function sendChat(){
+      const input=document.getElementById('chatInput'),text=input.value.trim();if(!text)return;
+      const chat=document.querySelector('.chat'),reply=document.getElementById('coachReply');
+      const user=document.createElement('div');user.className='bubble user';user.textContent=text;chat.insertBefore(user,document.querySelector('.prompt'));
+      reply.textContent="Absolutely. I can adapt that for you. Keep it simple today: choose the version that fits your energy, complete the basics, and we’ll adjust your weekly plan from there.";
+      input.value='';setTimeout(()=>chat.scrollTop=chat.scrollHeight,20);
+    }
+    const observer=new IntersectionObserver(entries=>entries.forEach(e=>{if(e.isIntersecting){e.target.querySelectorAll('.bar i').forEach(x=>x.style.width=x.dataset.width)}}),{threshold:.35});
+    observer.observe(document.querySelector('.progress-panel'));
+    document.getElementById('journeyModal').addEventListener('click',e=>{if(e.target.id==='journeyModal')closeJourney()});
+  </script>
+</body>
+</html>
